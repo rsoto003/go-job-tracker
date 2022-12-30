@@ -1,8 +1,16 @@
 package main
 
-import "fmt"
+import "github.com/gofiber/fiber/v2"
 
 func main() {
-	fmt.Println("we're going to build a job application tracker :) \n " +
-		"This project is going to be written in Go, with the Fiber framework for the front-end, and will use a Go backend with a PostgreSQL database.")
+	// Creating a fiber app
+	app := fiber.New()
+
+	// Add routes
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Hello, World!")
+	})
+
+	// Start app
+	app.Listen(":3000")
 }
