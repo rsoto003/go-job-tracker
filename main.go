@@ -1,8 +1,29 @@
 package main
 
-import "fmt"
+import (
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/template/html"
+)
 
 func main() {
-	fmt.Println("we're going to build a job application tracker :) \n " +
-		"This project is going to be written in Go, with the Fiber framework for the front-end, and will use a Go backend with a PostgreSQL database.")
+	// Load template
+	engine := html.New("./views", ".html")
+
+	// Creating a fiber app
+	app := fiber.New(fiber.Config{
+		Views: engine,
+	})
+
+	// Configure app
+	app.Static("/", "./public")
+
+	// Add routes
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.Render("index", fiber.Map{
+			"Title": "title",
+		})
+	})
+
+	// Start app
+	app.Listen(":3000")
 }
